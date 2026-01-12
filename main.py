@@ -2,6 +2,10 @@ import pandas as pd
 from metrics.independance import verifier_independance
 from metrics.separation import verifier_separation
 from metrics.suffisance import verifier_suffisance
+from graphs.independance import creer_graphique_independance
+from graphs.separation import creer_graphique_separation
+from graphs.suffisance import creer_graphique_suffisance
+
 
 # Exemple d'utilisation :
 # A = 0 : FEMME
@@ -14,7 +18,7 @@ data = {
 }
 df = pd.DataFrame(data)
 '''
-df = pd.read_json('dataset.json')
+df = pd.read_json('dataset_suffisance.json')
 
 print("# Dataset #\n")
 print("Nombre de d'homme :" + str(len(df[df['A'] == 1])))
@@ -42,8 +46,12 @@ print("\n# Suffisance #")
 precision_positive_a0, precision_positive_a1, precision_negative_a0, precision_negative_a1, diff_precision_positive, diff_precision_negative, is_sufficient = verifier_suffisance(df, 'R', 'Y', 'A')
 print("Précision positive femme : " + str(precision_positive_a0))
 print("Précision positive homme : " + str(precision_positive_a1))
-print("Précision négative femme: " + str(precision_negative_a0))
-print("Précision négative femme: " + str(precision_negative_a1))
+print("Précision négative femme : " + str(precision_negative_a0))
+print("Précision négative homme : " + str(precision_negative_a1))
 print("Difference précision positive : " + str(diff_precision_positive))
 print("Difference précision négative : " + str(diff_precision_negative))
 print("Suffisants : " + str(is_sufficient))
+
+creer_graphique_independance(df)
+creer_graphique_separation(df)
+creer_graphique_suffisance(df)

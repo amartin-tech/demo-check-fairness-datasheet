@@ -6,9 +6,12 @@ def verifier_suffisance(df, col_r, col_y, col_a, tolerance=0.05):
     
     # 2. Valeur Prédictive Négative (NPV) : P(Y=1 | R=0)
     # (Note : on regarde souvent si P(Y=0 | R_hat=0) est égal, ce qui revient au même)
+    # Pourquoi c'est pareil ? le résultat est le même en terme d'écart de point
     df_r0 = df[df[col_r] == 0]
-    precision_negative_a0 = df_r0[df_r0[col_a] == 0][col_y].mean()
-    precision_negative_a1 = df_r0[df_r0[col_a] == 1][col_y].mean()
+    # precision_negative_a0 = df_r0[df_r0[col_a] == 0][col_y].mean()
+    precision_negative_a0 = (1 - df_r0[df_r0[col_a] == 0][col_y]).mean()
+    # precision_negative_a1 = df_r0[df_r0[col_a] == 1][col_y].mean()
+    precision_negative_a1 = (1 - df_r0[df_r0[col_a] == 1][col_y]).mean()
     
     diff_precision_positive = abs(precision_positive_a0 - precision_positive_a1)
     diff_precision_negative = abs(precision_negative_a0 - precision_negative_a1)
